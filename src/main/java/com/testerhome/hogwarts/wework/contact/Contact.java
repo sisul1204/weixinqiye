@@ -1,0 +1,25 @@
+package com.testerhome.hogwarts.wework.contact;
+
+import com.testerhome.hogwarts.wework.Api;
+import com.testerhome.hogwarts.wework.Wework;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.requestSpecification;
+
+public class Contact extends Api {
+    String random=String.valueOf(System.currentTimeMillis());
+
+
+    @Override
+    public RequestSpecification getDefaultRequestSpecification(){
+        RequestSpecification requestSpecification = super.getDefaultRequestSpecification();
+        requestSpecification.queryParam("access_token",Wework.getToken()).contentType(ContentType.JSON);
+        requestSpecification.filter((req,res,ctx)->{
+            return ctx.next(req,res);
+        });
+        return requestSpecification;
+    }
+}
