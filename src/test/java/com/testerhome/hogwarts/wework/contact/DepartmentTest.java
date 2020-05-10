@@ -2,6 +2,8 @@ package com.testerhome.hogwarts.wework.contact;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.util.HashMap;
 
@@ -23,8 +25,8 @@ class DepartmentTest {
     @Test
     void list() {
 
-        department.list("2").then().statusCode(200)
-                .body("department.name[0]", equalTo("nuaa"));
+        department.list("1").then().statusCode(200)
+                .body("department.name[0]", equalTo("你的益达"));
 
     }
 
@@ -42,7 +44,15 @@ class DepartmentTest {
 
         }
         };
-        department.create(map).then().body("errcode", equalTo(0));
+        department.createMap(map).then().body("errcode", equalTo(0));
+    }
+
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/data/createWithDup.csv")
+    void createWithDup(String name,Integer expectCode){
+        department.create(name+random,1).then().body("errcode",equalTo(0));
+        department.create(name+random,1).then().body("errcode",equalTo(expectCode));
     }
 
 

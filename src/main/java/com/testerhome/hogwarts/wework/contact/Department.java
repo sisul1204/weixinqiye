@@ -41,20 +41,20 @@ public class Department extends Contact{
     }
 
 
-//    public Response create(HashMap<String, Object> map){
-//
-//        DocumentContext documentContext=JsonPath.parse(this.getClass()
-//                            .getResourceAsStream("/data/create.json"));
-//
-//        map.entrySet().forEach(entry->{
-//            documentContext.set(entry.getKey(),entry.getValue());
-//        });
-//        return getDefaultRequestSpecification()
-//                .body(documentContext.jsonString())
-//                .when().post("https://qyapi.weixin.qq.com/cgi-bin/department/create")
-//                .then().extract().response();
-//
-//    }
+    public Response createMap(HashMap<String, Object> map){
+
+        DocumentContext documentContext=JsonPath.parse(this.getClass()
+                            .getResourceAsStream("/data/create.json"));
+
+        map.entrySet().forEach(entry->{
+            documentContext.set(entry.getKey(),entry.getValue());
+        });
+        return getDefaultRequestSpecification()
+                .body(documentContext.jsonString())
+                .when().post("https://qyapi.weixin.qq.com/cgi-bin/department/create")
+                .then().extract().response();
+
+    }
 
 
 
@@ -86,7 +86,7 @@ public class Department extends Contact{
 
     }
 
-    public Response update(HashMap<String, Object> map){
+    public Response update(HashMap<String, Object> map)throws Exception{
         return templateFromHar(
                 "demo.har.json",
                 "https://work.weixin.qq.com/wework_admin/party?action=addparty",

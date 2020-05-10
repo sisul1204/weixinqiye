@@ -35,7 +35,7 @@ public class Api {
     }
 
 
-    public Response templateFromHar(String path,String pattern, HashMap<String, Object>map){
+    public Response templateFromHar(String path,String pattern, HashMap<String, Object>map)throws Exception{
         HarReader harReader = new HarReader();
         Har har = harReader.readFromFile(new File(getClass().getResource("/api/app.har.json").getPath()));
         for(HarEntry entry:har.getLog().getEntries()){
@@ -71,11 +71,12 @@ public class Api {
                 map.entrySet().forEach(entry->{
                     restful.query.replace(entry.getKey(),entry.getValue().toString());
                 });
+
             }
 
             if(restful.method.toLowerCase().contains("post")){
                 if(map.containsKey("_body")){
-                    restful.body=map.get("body").toString();
+                    restful.body=map.get("_body").toString();
                 }
                 if(map.containsKey("_file")){
                     String filePath=map.get("_file").toString();

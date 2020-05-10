@@ -31,7 +31,7 @@ class MemberTest {
         String random=String.valueOf(System.currentTimeMillis()).substring(5+0,5+8);
         HashMap<String,Object> map=new HashMap<String, Object>();
         map.put("userid",nameNew);
-        map.put("name",nameNew);
+        map.put("name",name);
         map.put("alias",alias);
         map.put("mobile","182"+random);
         map.put("department", Arrays.asList(1,2));
